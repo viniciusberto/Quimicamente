@@ -21,6 +21,9 @@ import javax.swing.JTable;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import aprenderbrincando.Model.Vo.*;
+import static aprenderbrincando.Recursos.obterCursor;
+import static aprenderbrincando.Recursos.obterFonte;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -55,7 +58,7 @@ public class Ranking extends JDialog {
     }
 
     private void desenharFrame() {
-        setCursor(CURSOR);
+        setCursor(obterCursor("Cursor"));
         setSize(convertTamanho(50, 80));
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
@@ -74,11 +77,11 @@ public class Ranking extends JDialog {
 
         lblTitulo = new JLabel(" Ranking");
         lblTitulo.setForeground(Color.BLACK);
-        lblTitulo.setFont(FONTE_PADRAO);
+        lblTitulo.setFont(obterFonte("ROBOTO", Font.BOLD, 28f));
         pnlTopo.add(lblTitulo, BorderLayout.WEST);
 
         btnSair = new JButton("X ");
-        btnSair.setFont(FONTE_PADRAO);
+        btnSair.setFont(obterFonte("ROBOTO", Font.BOLD, 15f));
         btnSair.setForeground(Color.BLACK);
         btnSair.setOpaque(false);
         btnSair.setContentAreaFilled(false);
@@ -112,7 +115,7 @@ public class Ranking extends JDialog {
         JPanel pnlOk = new JPanel(new GridLayout(1, 3));
         pnlOk.setOpaque(false);
         btnOk = new JButton("OK");
-        btnOk.setFont(FONTE_PADRAO);
+        btnOk.setFont(obterFonte("ROBOTO", Font.BOLD, 15f));
         btnOk.setForeground(Color.BLACK);
         btnOk.setBackground(new Color(172, 36, 193));
         btnOk.setBorder(new LineBorder(Color.BLACK, 2));

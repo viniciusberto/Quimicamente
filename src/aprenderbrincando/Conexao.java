@@ -18,7 +18,7 @@ public class Conexao {
     public Connection getConnection() {
         Connection conn = null;
         try {
-            String url = URL_BANCO;
+            String url = "jdbc:sqlite:" + URL_BANCO;
             conn = DriverManager.getConnection(url);
             
         } catch (SQLException e) {

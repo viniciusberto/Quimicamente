@@ -1,8 +1,9 @@
 package aprenderbrincando.View;
 
 import aprenderbrincando.Config;
-import static aprenderbrincando.Config.CURSOR;
 import aprenderbrincando.Controller.Observado;
+import static aprenderbrincando.Recursos.obterCursor;
+import static aprenderbrincando.Recursos.obterImagem;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -86,7 +87,7 @@ public class Mensagens extends JDialog {
         fonteBotao = fontePadrao.deriveFont((float) Config.convertTamanhoFonte(30));
         fonteTitulo = fontePadrao.deriveFont((float) Config.convertTamanhoFonte(30));
         fonteCaixaTexto = fontePadrao.deriveFont((float) Config.convertTamanhoFonte(30));
-        setCursor(CURSOR);
+        setCursor(obterCursor("Cursor"));
     }
 
     private void desenharTopo() {
@@ -167,7 +168,7 @@ public class Mensagens extends JDialog {
         if (emoji != null) {
             lblImagem.setPreferredSize(new Dimension(114, 114));
             lblImagem.setHorizontalAlignment(JLabel.CENTER);
-            lblImagem.setIcon(Manipuladores.tratarImagen(emoji, new Dimension(114, 114), Image.SCALE_SMOOTH));
+            lblImagem.setIcon(obterImagem(emoji, new Dimension(114, 114), Image.SCALE_SMOOTH));
         }
 
         if (tipo == MSG_ERRO || tipo == MSG_ACERTO || tipo == MSG_INFORMACAO) {
@@ -298,7 +299,7 @@ public class Mensagens extends JDialog {
         corFonte = corTopo;
         corFundo = Color.BLACK;
         corBotao = new Color(127, 0, 0);
-        emoji = "Emoji-Erro.png";
+        emoji = "Emoji-Erro";
         construir(MSG_ERRO);
         mensagem();
     }
@@ -308,7 +309,7 @@ public class Mensagens extends JDialog {
         corFonte = corTopo;
         corFundo = Color.BLACK;
         corBotao = new Color(66, 119, 46);
-        emoji = "Emoji-Acerto.png";
+        emoji = "Emoji-Acerto";
         construir(MSG_ACERTO);
         mensagem();
     }

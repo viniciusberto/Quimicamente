@@ -2,6 +2,8 @@ package aprenderbrincando.View.Inicio;
 
 import aprenderbrincando.Config;
 import static aprenderbrincando.Controller.ControllerExecucao.getTa;
+import static aprenderbrincando.Recursos.obterCursor;
+import static aprenderbrincando.Recursos.obterImagem;
 import aprenderbrincando.View.BotaoTransparente;
 import aprenderbrincando.View.Manipuladores;
 import java.awt.GridLayout;
@@ -44,19 +46,19 @@ public class PnlCentroInicio extends JPanel {
 
         btnIniciar = new BotaoTransparente("Iniciar");
         Manipuladores.centralizar(pnlIniciar, btnIniciar, Manipuladores.FLOW);
-        btnIniciar.setIcon(Manipuladores.tratarImagen("Botao-Iniciar.png", Config.convertTamanho(30, 17), Image.SCALE_SMOOTH));
+        btnIniciar.setIcon(obterImagem("Botao-Iniciar", Config.convertTamanho(30, 17), Image.SCALE_SMOOTH));
         btnIniciar.addActionListener(getTa());
         btnIniciar.addKeyListener(getTa());
         
         btnRanking = new BotaoTransparente("Ranking");
         Manipuladores.centralizar(pnlRanking, btnRanking, Manipuladores.FLOW);
-        btnRanking.setIcon(Manipuladores.tratarImagen("Botao-Ranking.png", Config.convertTamanho(30, 17), Image.SCALE_SMOOTH));
+        btnRanking.setIcon(obterImagem("Botao-Ranking", Config.convertTamanho(30, 17), Image.SCALE_SMOOTH));
         btnRanking.addActionListener(getTa());
         btnRanking.addKeyListener(getTa());
         
         btnSair = new BotaoTransparente("Sair");
         Manipuladores.centralizar(pnlSair, btnSair, Manipuladores.FLOW);
-        btnSair.setIcon(Manipuladores.tratarImagen("Botao-Sair.png", Config.convertTamanho(30, 17), Image.SCALE_SMOOTH));
+        btnSair.setIcon(obterImagem("Botao-Sair", Config.convertTamanho(30, 17), Image.SCALE_SMOOTH));
         btnSair.addActionListener(getTa());
         btnSair.addKeyListener(getTa());
         
@@ -69,7 +71,7 @@ public class PnlCentroInicio extends JPanel {
         add(pnlRanking);
         add(pnlSair);
         setOpaque(false);
-        setCursor(Config.CURSOR);
+        setCursor(obterCursor("Cursor"));
     }
 
     public JButton getBtnIniciar() {

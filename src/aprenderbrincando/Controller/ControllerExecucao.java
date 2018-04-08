@@ -11,7 +11,17 @@ import aprenderbrincando.Model.Vo.RankingVO;
 import aprenderbrincando.Model.Vo.Valores;
 import aprenderbrincando.View.Manipuladores;
 import aprenderbrincando.View.Mensagens;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -59,11 +69,10 @@ public class ControllerExecucao implements Observador {
             }
 
             telaExecucao = new Execucao();
-            for(Valores v : nivel.getListaAtual()){
-                telaExecucao.adicionarMenuLateral(v.getNome(),v.getFormula());
+            for (Valores v : nivel.getListaAtual()) {
+                telaExecucao.adicionarMenuLateral(v.getNome(), v.getFormula());
             }
-            
-            
+
             adicionarBotoes(nivel.getListaBotoes());
             tbtn.alterarLista(nivel.getListaBotoes());
             tbtn.alterarFrame(telaInicial, telaExecucao);
@@ -80,7 +89,8 @@ public class ControllerExecucao implements Observador {
             telaExecucao.repaint();
 
         } catch (NullPointerException npe) {
-            Mensagens.exibirMensagem(telaInicial, "Erro!", "Digite seu nome para iniciar o jogo!", Mensagens.MSG_INFORMACAO);
+            Mensagens.exibirMensagem(telaInicial, "Erro!", "<html><p>Digite seu nome para iniciar o jogo!</p>"
+                    + "<p>Erro: " + npe.getMessage() + "</p></html>", Mensagens.MSG_INFORMACAO);
         }
 
     }
@@ -128,7 +138,7 @@ public class ControllerExecucao implements Observador {
 
         }
     }
-    
+
     public void salvar() {
         RankingVO ranking = new RankingVO();
         ranking.setNome(partida.getNomeJogador());

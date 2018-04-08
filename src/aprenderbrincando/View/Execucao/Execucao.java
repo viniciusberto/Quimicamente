@@ -1,6 +1,7 @@
 package aprenderbrincando.View.Execucao;
 
-import static aprenderbrincando.Config.CURSOR;
+import static aprenderbrincando.Recursos.obterCursor;
+import static aprenderbrincando.Recursos.obterImagem;
 import aprenderbrincando.View.Animacoes;
 import aprenderbrincando.View.BotaoFormula;
 import aprenderbrincando.View.Telas;
@@ -22,8 +23,8 @@ public class Execucao extends Telas {
     private PnlLateralExecucao lateral;
 
     public Execucao() {
-        setCursor(CURSOR);
-        alteraImagemFundo(tratarImagen("Fundo-Meio-Execucao.png", getSize(), Image.SCALE_SMOOTH));
+        setCursor(obterCursor("Cursor"));
+        alteraImagemFundo(obterImagem("Fundo-Meio-Execucao", getSize(), Image.SCALE_SMOOTH));
 
         topo = new PnlTopoExecucao();
         meio = new PnlMeioExecucao();

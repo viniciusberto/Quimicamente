@@ -2,6 +2,8 @@ package aprenderbrincando.View.Inicio;
 
 import aprenderbrincando.*;
 import static aprenderbrincando.Controller.ControllerExecucao.*;
+import static aprenderbrincando.Recursos.obterCursor;
+import static aprenderbrincando.Recursos.obterImagem;
 import static aprenderbrincando.View.Manipuladores.*;
 import aprenderbrincando.View.Telas;
 import java.awt.BorderLayout;
@@ -22,8 +24,8 @@ public final class Inicio extends Telas {
 
     public Inicio() {
         this.setTitle("Quimicamente");
-        setCursor(Config.CURSOR);
-        alteraImagemFundo(tratarImagen("Fundo-Inicio.png", Config.TAM_TELA, Image.SCALE_SMOOTH));
+        setCursor(obterCursor("Cursor"));
+        alteraImagemFundo(obterImagem("Fundo-Inicio", Config.TAM_TELA, Image.SCALE_SMOOTH));
         addKeyListener(getTa());
         inicializarComponentes();
         requestFocus();

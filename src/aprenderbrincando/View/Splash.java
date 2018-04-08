@@ -1,6 +1,7 @@
 package aprenderbrincando.View;
 
 import static aprenderbrincando.Config.convertTamanho;
+import static aprenderbrincando.Recursos.obterImagem;
 import java.awt.Color;
 import java.awt.Image;
 import javax.swing.JFrame;
@@ -21,7 +22,7 @@ public class Splash extends JFrame {
     }
 
     private void executar() {
-        lblFundo = new JLabel(Manipuladores.tratarImagen("Splash.png", convertTamanho(40, 40), Image.SCALE_SMOOTH));
+        lblFundo = new JLabel(obterImagem("Splash", convertTamanho(40, 40), Image.SCALE_SMOOTH));
         lblFundo.setBounds(0, 0, convertTamanho(40, 40).width, convertTamanho(40, 40).height);
         this.setSize(convertTamanho(40, 40));
         this.setLocationRelativeTo(null);

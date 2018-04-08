@@ -1,9 +1,12 @@
 package aprenderbrincando.View.Execucao;
 
 import static aprenderbrincando.Config.*;
+import aprenderbrincando.Recursos;
+import static aprenderbrincando.Recursos.obterFonte;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import javax.swing.BorderFactory;
@@ -53,12 +56,12 @@ public class PnlLateralExecucao extends JPanel {
         JLabel lblFormula = new JLabel(formula);
 
         lblFormula.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        lblFormula.setFont(FONTE_PADRAO.deriveFont(15f));
+        lblFormula.setFont(obterFonte("ROBOTO", Font.BOLD, 15f));
         lblFormula.setOpaque(true);
         lblFormula.setBackground(new Color(221, 118, 242));
 
         lblNome.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        lblNome.setFont(FONTE_PADRAO.deriveFont(15f));
+        lblNome.setFont(obterFonte("ROBOTO", Font.BOLD, 15f));
         lblNome.setOpaque(true);
         lblNome.setBackground(new Color(161, 0, 193));
         

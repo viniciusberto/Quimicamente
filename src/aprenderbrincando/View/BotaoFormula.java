@@ -2,6 +2,7 @@ package aprenderbrincando.View;
 
 import aprenderbrincando.Controller.ControllerExecucao;
 import static aprenderbrincando.Controller.ControllerExecucao.getTa;
+import static aprenderbrincando.Recursos.obterImagem;
 import javax.swing.JButton;
 import static aprenderbrincando.View.Manipuladores.*;
 import java.awt.Image;
@@ -20,10 +21,10 @@ public class BotaoFormula extends JButton {
 
     private void alterarPropriedades(String nome) {
         setName(nome);
-        setIcon(tratarImagen("Botao.png", escalaBotao(), Image.SCALE_SMOOTH));
+        setIcon(obterImagem("Botao", escalaBotao(), Image.SCALE_SMOOTH));
         setRolloverEnabled(true);
-        setRolloverIcon(tratarImagen("Botao-Hover.png", escalaBotao(), Image.SCALE_SMOOTH));
-        setPressedIcon(tratarImagen("Botao-Clicked.png", escalaBotao(), Image.SCALE_SMOOTH));
+        setRolloverIcon(obterImagem("Botao-Hover", escalaBotao(), Image.SCALE_SMOOTH));
+        setPressedIcon(obterImagem("Botao-Clicked", escalaBotao(), Image.SCALE_SMOOTH));
         setContentAreaFilled(false);
         setFocusPainted(false);
         setBorder(null);

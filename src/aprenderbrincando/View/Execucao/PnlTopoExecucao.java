@@ -2,8 +2,8 @@ package aprenderbrincando.View.Execucao;
 
 import static aprenderbrincando.Config.TAM_NORTE_EXE;
 import static aprenderbrincando.Config.convertTamanho;
+import static aprenderbrincando.Recursos.obterImagem;
 import static aprenderbrincando.View.Manipuladores.estilizarLabels;
-import static aprenderbrincando.View.Manipuladores.tratarImagen;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Image;
@@ -23,7 +23,7 @@ public class PnlTopoExecucao extends JPanel{
     private JLabel lblTempo = new JLabel("Tempo");
 
     public PnlTopoExecucao() {
-        JLabel fundo = new JLabel(tratarImagen("Fundo-Topo-Execucao.png", TAM_NORTE_EXE, Image.SCALE_SMOOTH));
+        JLabel fundo = new JLabel(obterImagem("Fundo-Topo-Execucao", TAM_NORTE_EXE, Image.SCALE_SMOOTH));
         setBorder(BorderFactory.createMatteBorder(3, 3, 0, 3, Color.BLACK));
         setBackground(Color.WHITE);
         setPreferredSize(TAM_NORTE_EXE);

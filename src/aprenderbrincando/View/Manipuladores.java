@@ -1,5 +1,6 @@
 package aprenderbrincando.View;
 
+import aprenderbrincando.Config;
 import static aprenderbrincando.Config.*;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -9,6 +10,7 @@ import java.awt.Point;
 import static java.lang.Math.round;
 import java.util.Random;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JComponent;
 
 /**
@@ -36,24 +38,17 @@ public class Manipuladores {
      * utilizado o layout Nulo.
      */
     public static final int NULL = 3;
+    
 
-    /**
-     * Método responsável por redimensionar imagens de acordo com as proporções
-     * passadas pelos parametros;
-     *
-     * @param imagem Caminho da imagem a ser redimencionada
-     * @param tamanho Dimensão/Formato da imagem
-     * @param escala Forma como a imagem será redimensionada utilidada da clase
-     * Image
-     * @return
-     */
-    public static ImageIcon tratarImagen(String imagem, Dimension tamanho, int escala) {
-        ImageIcon img = new ImageIcon(DIR_IMAGENS + imagem);
-        int altura = tamanho.height;
-        int largura = tamanho.width;
-
-        return new ImageIcon(img.getImage().getScaledInstance(largura, altura, escala));
-    }
+//    public static ImageIcon tratarImagen(String imagem, Dimension tamanho, int escala) {
+//        JButton btn = new JButton();
+//        System.out.println(DIR_IMAGENS+imagem);
+//        ImageIcon img = new ImageIcon(btn.getClass().getResource(DIR_IMAGENS+imagem));
+//        int altura = tamanho.height;
+//        int largura = tamanho.width;
+//
+//        return new ImageIcon(img.getImage().getScaledInstance(largura, altura, escala));
+//    }
 
     /**
      * Método responsável por centralizar um componente dentro de outro:

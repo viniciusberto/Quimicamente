@@ -6,29 +6,25 @@ package aprenderbrincando;
  * @author Vinicius Berto
  */
 import aprenderbrincando.Controller.Partida;
-import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.FontFormatException;
-import java.awt.Point;
 import java.awt.Toolkit;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import static java.lang.Math.round;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.ImageIcon;
 
 public class Config {
+
+    public static String URL_BANCO;
 
     /**
      * Ref para o método convertTamanhoLA
      */
     public static int LARGURA = 1;
     public static int ALTURA = 2;
-
-    /*Banco de Dados*/
-    public static String URL_BANCO;
 
     /*Valores Estáticos*/
     public static int PONTOS_ACERTO;
@@ -39,7 +35,7 @@ public class Config {
 
     /*Telas*/
     private static final Toolkit TOO = Toolkit.getDefaultToolkit();
-    public static final Dimension TAM_TELA = TOO.getScreenSize();
+    public static final Dimension TAM_TELA = new Dimension(1280, 1024);//TOO.getScreenSize();
     public static boolean WIDESCREEM;
     public static Dimension TAM_NORTE_EXE, TAM_SUL_EXE, TAM_CENTRO_EXE, TAM_LATERAL_EXE;
     public static int LINHAS, COLUNAS;
@@ -47,21 +43,49 @@ public class Config {
     public static int TAM_FONTE_BTN_FORMULA;
     public static int TAM_FONTE_LBL_EXECUCAO;
     public static int QUANTIDADE_BOTOES;
+
     public static String DIR_IMAGENS;
     public static String DIR_CURSOR;
-    public static Cursor CURSOR;
-    public static Font FONTE_PADRAO;
     public static String DIR_FONTE;
 
     public Config() {
 
+        /*Banco de dados*/
+        String caminho = /*getClass().getResource("").toString() + */"Save/";
+        //caminho = caminho.replace("file:", "");
+        //caminho = caminho.replace("/AprenderBrincando.jar!", "");
+        //caminho = caminho.replace("aprenderbrincando/", "");
+        
+        File fl = new File(caminho);
+        
+        if (!fl.exists()) {
+            fl.mkdirs();
+            
+            InputStream is = null;
+            OutputStream os = null;
+            try {
+                is = getClass().getResourceAsStream("/aprenderbrincando/Model/Database/Banco.db");
+                os = new FileOutputStream(caminho+"saves.dat");
+                File templateFile = File.createTempFile(caminho+"saves", "dat");
+                byte[] buffer = new byte[1024];
+                int length;
+                while ((length = is.read(buffer)) > 0) {
+                    os.write(buffer, 0, length);
+                }
+                is.close();
+                os.close();
+            } catch (FileNotFoundException ex) {
+                ex.printStackTrace();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+
+        }
+        URL_BANCO = caminho+"saves.dat";
+
         QUANTIDADE_BOTOES = 10;
         WIDESCREEM = false;
         PAUSA = false;
-        /*Banco de dados*/
-        URL_BANCO = "jdbc:sqlite:" + getClass().getResource("").toString() + "Model/Database/Banco.db";
-        URL_BANCO = trocarBarras(URL_BANCO);
-
 
         /*Camada Controller*/
         PONTOS_ACERTO = 10;
@@ -78,43 +102,15 @@ public class Config {
         setTAM_FONTE_BTN_FORMULA();
         setTAM_FONTE_LBL_EXECUCAO();
         verificarEscalaDaTela();
+
         if (WIDESCREEM) {
-            DIR_IMAGENS = getClass().getResource("").toString() + "Assets/Imagens/16-9/";
+            DIR_IMAGENS = "/aprenderbrincando/Assets/Imagens/16-9/";
         } else {
-            DIR_IMAGENS = getClass().getResource("").toString() + "Assets/Imagens/4-3/";
+            DIR_IMAGENS = "/aprenderbrincando/Assets/Imagens/4-3/";
         }
-        DIR_IMAGENS = trocarBarras(DIR_IMAGENS);
-        DIR_CURSOR = getClass().getResource("").toString() + "Assets/Cursores/";
-        DIR_CURSOR = trocarBarras(DIR_CURSOR);
-        DIR_FONTE = getClass().getResource("").toString() + "Assets/Fontes/";
-        DIR_FONTE = trocarBarras(DIR_FONTE);
-        CURSOR = TOO.createCustomCursor(new ImageIcon(DIR_CURSOR + "Cursor.png").getImage(), new Point(0, 0), "Ponteiro");
-        File fl = new File(DIR_FONTE + "ROBOTOB.ttf");
-        try {
-            FONTE_PADRAO = Font.createFont(Font.TRUETYPE_FONT, fl);
-        } catch (FontFormatException ex) {
-            Logger.getLogger(Config.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(Config.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        FONTE_PADRAO = FONTE_PADRAO.deriveFont(25f);
+        DIR_CURSOR = "/aprenderbrincando/Assets/Cursores/";
+        DIR_FONTE = "/aprenderbrincando/Assets/Fontes/";
 
-    }
-
-    private String trocarBarras(String str) {
-        if (System.getProperty("os.name").equals("Linux")) {
-            str = str.replace("\\AprenderBrincando.jar!", "");
-            str = str.replace("file:", "");
-            str = str.replace("jar:", "");
-        } else {
-            str = str.replaceFirst("/", "");
-            str = str.replace("/", "\\");
-            str = str.replaceFirst("%20", " ");
-            str = str.replace("\\AprenderBrincando.jar!", "");
-            str = str.replace("file:", "");
-            str = str.replace("jar:", "");
-        }
-        return str;
     }
 
     /**
@@ -182,7 +178,12 @@ public class Config {
 
     public static void setTAM_FONTE_BTN_FORMULA() {
         Double c1;
-        c1 = (double) 24 * TAM_TELA.height;
+        if (TAM_TELA.height > 900 && TAM_TELA.width < 1500) {
+            c1 = (double) 18 * TAM_TELA.height;
+        } else {
+            c1 = (double) 24 * TAM_TELA.height;
+        }
+
         c1 = (double) c1 / 1024;
         Config.TAM_FONTE_BTN_FORMULA = round(c1.floatValue());
     }
