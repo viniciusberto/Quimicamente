@@ -15,10 +15,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import static java.lang.Math.round;
+import javax.swing.JButton;
 
 public class Config {
 
     public static String URL_BANCO;
+    public static String URL_APPLET;
+    public static String JAR_FILE;
 
     /**
      * Ref para o método convertTamanhoLA
@@ -35,7 +38,7 @@ public class Config {
 
     /*Telas*/
     private static final Toolkit TOO = Toolkit.getDefaultToolkit();
-    public static final Dimension TAM_TELA = new Dimension(1280, 1024);//TOO.getScreenSize();
+    public static final Dimension TAM_TELA = /*new Dimension(1280, 1024);*/ TOO.getScreenSize();
     public static boolean WIDESCREEM;
     public static Dimension TAM_NORTE_EXE, TAM_SUL_EXE, TAM_CENTRO_EXE, TAM_LATERAL_EXE;
     public static int LINHAS, COLUNAS;
@@ -49,39 +52,29 @@ public class Config {
     public static String DIR_FONTE;
 
     public Config() {
+        URL_APPLET = getClass().getResource("").toString();
+        nomeArquivoJAR();
 
         /*Banco de dados*/
-        String caminho = /*getClass().getResource("").toString() + */"Save/";
-        //caminho = caminho.replace("file:", "");
-        //caminho = caminho.replace("/AprenderBrincando.jar!", "");
-        //caminho = caminho.replace("aprenderbrincando/", "");
-        
-        File fl = new File(caminho);
-        
-        if (!fl.exists()) {
-            fl.mkdirs();
-            
-            InputStream is = null;
-            OutputStream os = null;
-            try {
-                is = getClass().getResourceAsStream("/aprenderbrincando/Model/Database/Banco.db");
-                os = new FileOutputStream(caminho+"saves.dat");
-                File templateFile = File.createTempFile(caminho+"saves", "dat");
-                byte[] buffer = new byte[1024];
-                int length;
-                while ((length = is.read(buffer)) > 0) {
-                    os.write(buffer, 0, length);
-                }
-                is.close();
-                os.close();
-            } catch (FileNotFoundException ex) {
-                ex.printStackTrace();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
+        String caminhoBanco = null;
+        String resourceBanco = "/aprenderbrincando/Model/Database/";
+        String resourceBancoFile = "Banco.db";
 
+        String caminhoLib = null;
+        String resourceLib = "/aprenderbrincando/Assets/lib/";
+        String resourceLibFile = "sqlite-jdbc-3.20.0.jar";
+
+        if (getClass().getResource("").toString().indexOf("build") > 0) {
+            caminhoBanco = getClass().getResource("").toString() + "Save/";
+            caminhoBanco = caminhoBanco.replace("file:", "");
+            caminhoBanco = caminhoBanco.replace("/AprenderBrincando.jar!", "");
+        } else {
+            caminhoBanco = "Save/";
+            caminhoLib = "lib/";
+            copiarArquivo(resourceLib, resourceLibFile, caminhoLib, "sqlite-jdbc-3.20.0", "jar");
         }
-        URL_BANCO = caminho+"saves.dat";
+        System.out.println("");
+        URL_BANCO = copiarArquivo(resourceBanco, resourceBancoFile, caminhoBanco, "saves", "dat");
 
         QUANTIDADE_BOTOES = 10;
         WIDESCREEM = false;
@@ -111,6 +104,63 @@ public class Config {
         DIR_CURSOR = "/aprenderbrincando/Assets/Cursores/";
         DIR_FONTE = "/aprenderbrincando/Assets/Fontes/";
 
+    }
+
+    private void nomeArquivoJAR() {
+        int FIM = URL_APPLET.indexOf(".jar");
+        int INICIO = FIM;
+        while (!URL_APPLET.substring(INICIO, INICIO + 1).equals("/")) {
+            INICIO--;
+            if (INICIO == 0) {
+                break;
+            }
+        }
+        JAR_FILE = URL_APPLET.substring(INICIO + 1, FIM) + ".jar";
+    }
+
+    public static String copiarArquivo(String caminhoOrigem, String nomeOrigem, String caminhoDestino, String nomeDestino, String formatoDestino) {
+        String retorno = null;
+        File fl;
+        fl = new File(caminhoDestino);
+        JButton btn = new JButton();
+
+        if (!fl.exists()) {
+            fl.mkdirs();
+            InputStream is = null;
+            OutputStream os = null;
+            try {
+                is = btn.getClass().getResourceAsStream(caminhoOrigem + nomeOrigem);
+                os = new FileOutputStream(caminhoDestino + nomeDestino + "." + formatoDestino);
+                File templateFile = File.createTempFile(caminhoDestino + nomeDestino, formatoDestino);
+                byte[] buffer = new byte[1024];
+                int length;
+                while ((length = is.read(buffer)) > 0) {
+                    os.write(buffer, 0, length);
+                }
+                is.close();
+                os.close();
+                retorno = caminhoDestino + nomeDestino + "." + formatoDestino;
+                if (nomeDestino.contains("jdbc")) {
+                    try {
+                        Process Processo = Runtime.getRuntime().exec("java -jar " + JAR_FILE);
+                    } catch (IOException MensagemdeErro) {
+                        System.out.println(MensagemdeErro);
+                    }
+                    System.exit(0);
+                }
+            } catch (FileNotFoundException ex) {
+                ex.printStackTrace();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            } catch (NullPointerException ne) {
+                ne.printStackTrace();
+            }
+
+        } else {
+            retorno = caminhoDestino + nomeDestino + "." + formatoDestino;
+        }
+
+        return retorno;
     }
 
     /**
@@ -211,7 +261,6 @@ public class Config {
     public static void inicializarMATRIZ(int linhas, int colunas) {
         MATRIZ = null;
         MATRIZ = new boolean[linhas][colunas];
-        //System.out.println("L x C: " + linhas + "x" + colunas);
         for (int l = 0; l < LINHAS; l++) {
             for (int c = 0; c < COLUNAS; c++) {
                 MATRIZ[l][c] = false;
@@ -228,6 +277,21 @@ public class Config {
 
     public static void setTEMPO_BOTOES() {
         TEMPO_BOTAO = 5000 / QUANTIDADE_BOTOES;
+    }
+
+    public static void DebugFunction(Object exibir) {
+        System.out.println("");
+        System.out.println("");
+        System.out.println("");
+        System.out.println("");
+        System.out.println("");
+        System.out.println(exibir);
+        System.out.println("");
+        System.out.println("");
+        System.out.println("");
+        System.out.println("");
+        System.out.println("");
+        System.exit(0);
     }
 
 }
