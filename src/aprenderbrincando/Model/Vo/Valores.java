@@ -1,9 +1,9 @@
 package aprenderbrincando.Model.Vo;
 
 /**
- *
  * @author Vinicius Berto
  */
+
 public class Valores {
     
     private int id;

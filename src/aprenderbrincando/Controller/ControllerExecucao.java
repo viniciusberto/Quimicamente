@@ -1,5 +1,8 @@
 package aprenderbrincando.Controller;
 
+/**
+ * @author Vinicius Berto
+ */
 import aprenderbrincando.View.Execucao.Execucao;
 import aprenderbrincando.View.BotaoFormula;
 import aprenderbrincando.View.ThreadBotoes;
@@ -11,12 +14,9 @@ import aprenderbrincando.Model.Vo.RankingVO;
 import aprenderbrincando.Model.Vo.Valores;
 import aprenderbrincando.View.Manipuladores;
 import aprenderbrincando.View.Mensagens;
+import aprenderbrincando.View.MenuPausa.MenuPausa;
 import java.util.List;
 
-/**
- *
- * @author IFMS
- */
 public class ControllerExecucao implements Observador {
 
     private Partida partida;
@@ -80,7 +80,7 @@ public class ControllerExecucao implements Observador {
 
         } catch (NullPointerException npe) {
             Mensagens.exibirMensagem(telaInicial, "Erro!", "<html><p>Digite seu nome para iniciar o jogo!</p>"
-                    + "<p>Erro: " + npe.getMessage() + "</p></html>", Mensagens.MSG_INFORMACAO);
+                    + "</html>", Mensagens.MSG_INFORMACAO);
         }
 
     }
@@ -166,6 +166,22 @@ public class ControllerExecucao implements Observador {
 
     public ThreadBotoes getTbtn() {
         return tbtn;
+    }
+
+    public void sair() {
+        if (telaExecucao.isVisible() || !telaInicial.isVisible()) {
+            Config.PAUSA = true;
+            int r = MenuPausa.exibirMenuPausa(telaExecucao);
+            if (r == MenuPausa.CANCELAR) {
+                Config.PAUSA = false;
+            } else if (r == MenuPausa.ENCERRAR) {
+                if (Mensagens.exibirDialogo(telaExecucao, "Voltar ao menu inicial: ", "Deseja salvar a sua pontuação atual?", Mensagens.BTN_SIM_NAO) == Mensagens.BTN_SIM) {
+                    encerrarPartida();
+                } else {
+                    Config.PAUSA = false;
+                }
+            }
+        }
     }
 
 }

@@ -1,19 +1,18 @@
 package aprenderbrincando.Controller;
 
+/**
+ * @author Vinicius Berto
+ */
+
+import aprenderbrincando.View.MenuPausa.MenuPausa;
 import aprenderbrincando.View.Ranking.Ranking;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import static java.awt.event.KeyEvent.VK_ESCAPE;
 import java.awt.event.KeyListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import javax.swing.JButton;
 
-/**
- *
- * @author Vinicius Berto
- */
 public class TratadoraAction implements ActionListener, KeyListener {
 
     private ControllerExecucao ce;
@@ -45,10 +44,6 @@ public class TratadoraAction implements ActionListener, KeyListener {
     }
 
     @Override
-    public void keyTyped(KeyEvent e) {
-    }
-
-    @Override
     public void keyPressed(KeyEvent e) {
         String src = e.getSource().getClass().toString();
         if (e.getKeyCode() == VK_ESCAPE) {
@@ -60,13 +55,18 @@ public class TratadoraAction implements ActionListener, KeyListener {
                     btn.doClick();
                 }
             }else if(src.indexOf("BotaoFormula")>0){
-                ce.getTelaExecucao().sair();
+                ce.sair();
             }
+            
         }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
     }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+ }
 
 }

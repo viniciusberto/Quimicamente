@@ -1,5 +1,9 @@
 package aprenderbrincando.Controller;
 
+/**
+ * @author Vinicius Berto
+ */
+
 import static aprenderbrincando.Config.QUANTIDADE_BOTOES;
 import aprenderbrincando.Model.Dao.ValoresDAO;
 import aprenderbrincando.View.BotaoFormula;
@@ -8,10 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-/**
- *
- * @author Vinicius Berto
- */
 public class Nivel extends Observado{
 
     private List<BotaoFormula> listaBotoes;

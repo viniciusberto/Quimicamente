@@ -1,22 +1,19 @@
 package aprenderbrincando.View.Execucao;
 
+/**
+ * @author Vinicius Berto
+ */
+
 import static aprenderbrincando.Config.*;
-import aprenderbrincando.Recursos;
 import static aprenderbrincando.Recursos.obterFonte;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Font;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-/**
- *
- * @author vinio
- */
 public class PnlLateralExecucao extends JPanel {
 
     JPanel pnlFormulas, pnlNomes;

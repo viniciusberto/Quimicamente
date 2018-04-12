@@ -1,11 +1,11 @@
 package aprenderbrincando.Controller;
 
-import aprenderbrincando.Model.Vo.Valores;
-
 /**
- *
  * @author Vinicius Berto
  */
+
+import aprenderbrincando.Model.Vo.Valores;
+
 public class Partida extends Observado {
 
     //Valores estatísticos

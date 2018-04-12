@@ -2,27 +2,33 @@ package aprenderbrincando;
 
 import aprenderbrincando.Controller.ControllerExecucao;
 import aprenderbrincando.Controller.TratadoraAction;
+import aprenderbrincando.View.Manipuladores;
+import aprenderbrincando.View.MenuPausa.MenuPausa;
 import aprenderbrincando.View.Splash;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
+/**
+ * Classe responsável por inicializar a aplicação
+ * 
+ * @author Vinícius Berto
+ */
 public class AprenderBrincando {
+
+    private static Splash s;
 
     public static void main(String[] args) {
         ControllerExecucao ctrl = new ControllerExecucao();
-        
+        ctrl.setTa(new TratadoraAction(ctrl));
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Splash s = new Splash();
-                s.setVisible(false);
-                s = null;
-                ctrl.setTa(new TratadoraAction(ctrl));
-                ctrl.carregarInicio();
+                s = new Splash();
+
             }
         });
-
+        Manipuladores.aguardar(3000);
+        s.setVisible(false);
+        s = null;
+        ctrl.setTa(new TratadoraAction(ctrl));
+        ctrl.carregarInicio();
+       // Tips.exibirDica(ctrl.getTelaInicial(), ctrl.getTelaInicial().getCentro().getBtnIniciar());
     }
 }

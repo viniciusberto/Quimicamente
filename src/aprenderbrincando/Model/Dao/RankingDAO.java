@@ -1,5 +1,8 @@
 package aprenderbrincando.Model.Dao;
 
+/**
+ * @author Vinicius Berto
+ */
 import aprenderbrincando.Conexao;
 import aprenderbrincando.Model.Vo.RankingVO;
 import aprenderbrincando.View.Mensagens;
@@ -11,10 +14,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author Vinícius Berto
- */
 public class RankingDAO {
 
     public List<RankingVO> listar() {
@@ -38,10 +37,24 @@ public class RankingDAO {
             }
             stmt.close();
             conn.close();
-        } catch (SQLException ex) {
-            Mensagens.exibirMensagem(null, "Erro!", "Falha ao carregar os dados do banco!<html><p>Erro: "+ex.getMessage()+"</p></html>", Mensagens.MSG_ERRO);
-        }
+        } catch (SQLException | NullPointerException ex) {
+            String msg = ex.getMessage();
+            String div = "";
+            lista = null;
+            if (msg != null) {
+                while (msg.length() > 40) {
+                    div += msg.substring(0, 40) + "<br>";
+                    msg = msg.substring(40, msg.length());
+                }
 
+                div += msg;
+
+                Mensagens.exibirMensagem(null, "Erro!", "<html>"
+                        + "<p>Falha ao carregar os dados do banco!!</p>"
+                        + "<p><span><br>Erro:" + div + "</span></p>"
+                        + "</html>", Mensagens.MSG_ERRO);
+            }
+        }
         return lista;
     }
 
@@ -59,7 +72,7 @@ public class RankingDAO {
             ps.close();
             conn.close();
         } catch (SQLException se) {
-            Mensagens.exibirMensagem(null, "Erro!", "<html><p>Falha ao salvar ranking!</p><p>Erro: " + se.getMessage() + "</p></html>", Mensagens.MSG_ERRO);
+            Mensagens.exibirMensagem(null, "Erro!", "<html><p>Falha ao salvar ranking!</p><p>Erro: " + se.getMessage() + "</p></html>", Mensagens.MSG_ERRO_FORMULA);
         }
 
     }

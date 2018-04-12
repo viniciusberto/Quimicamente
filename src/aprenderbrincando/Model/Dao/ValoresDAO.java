@@ -1,5 +1,9 @@
 package aprenderbrincando.Model.Dao;
 
+/**
+ * @author Vinicius Berto
+ */
+
 import static aprenderbrincando.Config.TAM_FONTE_BTN_FORMULA;
 import aprenderbrincando.Conexao;
 import aprenderbrincando.Model.Vo.Valores;
@@ -11,10 +15,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author Vinicius
- */
 public class ValoresDAO {
 
     public List<Valores> listagem() {

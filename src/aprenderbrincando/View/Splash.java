@@ -1,6 +1,7 @@
 package aprenderbrincando.View;
 
 import static aprenderbrincando.Config.convertTamanho;
+import aprenderbrincando.Recursos;
 import static aprenderbrincando.Recursos.obterImagem;
 import java.awt.Color;
 import java.awt.Image;
@@ -9,8 +10,9 @@ import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 
 /**
- *
- * @author Vinicius Berto
+ * Exibe uma tela de splash com o logo da aplicação
+ * 
+ * @author vinicius
  */
 public class Splash extends JFrame {
 
@@ -18,6 +20,7 @@ public class Splash extends JFrame {
     private JProgressBar pb;
 
     public Splash() {
+        setCursor(Recursos.obterCursor("Cursor"));
         executar();
     }
 
@@ -31,6 +34,5 @@ public class Splash extends JFrame {
         this.add(lblFundo);
         this.setBackground(new Color(0, 0, 0, 0));
         this.setVisible(true);
-        Manipuladores.aguardar(3000);
     }
 }

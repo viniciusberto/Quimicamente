@@ -1,9 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package aprenderbrincando.View.Ranking;
+
+/**
+ * @author Vinicius Berto
+ */
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -31,10 +30,6 @@ import static java.awt.event.KeyEvent.VK_ESCAPE;
 import java.awt.event.KeyListener;
 import javax.swing.JFrame;
 
-/**
- *
- * @author vinio
- */
 public class Ranking extends JDialog {
 
     private JPanel pnlTopo;
@@ -46,6 +41,7 @@ public class Ranking extends JDialog {
     private DefaultTableModel modelo;
     private JTable tblTabela;
     private JButton btnOk;
+    private boolean contemErros = false;
 
     public Ranking(JFrame tela) {
         super(tela, true);
@@ -171,16 +167,28 @@ public class Ranking extends JDialog {
     private void preencher(DefaultTableModel dtm) {
         dtm.setNumRows(0);
         RankingDAO dao = new RankingDAO();
-
-        for (RankingVO r : dao.listar()) {
-            dtm.addRow(new Object[]{r.getNome(),
-                r.getPontuacao(), r.getNivel(), r.getErros(), r.getAcertos()});
+        try {
+            for (RankingVO r : dao.listar()) {
+                dtm.addRow(new Object[]{r.getNome(),
+                    r.getPontuacao(), r.getNivel(), r.getErros(), r.getAcertos()});
+            }
+        } catch (NullPointerException npe) {
+            System.out.println(npe.getMessage());
+            contemErros = true;
         }
-
     }
 
     private void sair() {
         setVisible(false);
     }
+
+    @Override
+    public void setVisible(boolean b) {
+       if(!contemErros){
+        super.setVisible(b);
+       } 
+    }
+    
+    
 
 }

@@ -1,7 +1,10 @@
 package aprenderbrincando.View.Execucao;
 
-import java.awt.Color;
+/**
+ * @author Vinicius Berto
+ */
 
+import java.awt.Color;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 

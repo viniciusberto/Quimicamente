@@ -1,12 +1,12 @@
 package aprenderbrincando.View;
 
+/**
+ * @author Vinicius Berto
+ */
+
 import javax.swing.JButton;
 import static aprenderbrincando.Config.*;
 
-/**
- *
- * @author Vinicius Berto
- */
 public class BotaoTransparente extends JButton {
 
     public BotaoTransparente(String string) {

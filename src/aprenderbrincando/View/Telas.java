@@ -1,14 +1,15 @@
 package aprenderbrincando.View;
 
 /**
- *
  * @author Vinicius Berto
  */
+
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import static aprenderbrincando.Config.*;
 import static aprenderbrincando.Controller.ControllerExecucao.getTa;
+import aprenderbrincando.Recursos;
 import java.awt.BorderLayout;
 import java.awt.Component;
 
@@ -20,6 +21,7 @@ public abstract class Telas extends JFrame {
         if (background == null) {
             background = new JLabel();
         }
+        setCursor(Recursos.obterCursor("Cursor"));
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setUndecorated(true);
         setLayout(null);
@@ -31,6 +33,7 @@ public abstract class Telas extends JFrame {
         background.setBounds(0, 0, getSize().width, getSize().height);
         add(background, new Object());
         addKeyListener(getTa());
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
     public void adicionar(Component cmpnt, Object o) {
@@ -41,15 +44,11 @@ public abstract class Telas extends JFrame {
         background.setIcon(img);
     }
 
-    public void sair() {
-        PAUSA = true;
-        
-        if (Mensagens.exibirDialogoConfirmacao(this, "Sair", "Deseja "
-                + "realmente sair do jogo?") == Mensagens.BTN_SIM) {
+    public void sair() {      
+        if (Mensagens.exibirDialogo(this, "Sair", "Deseja "
+                + "realmente sair do jogo?",Mensagens.BTN_SIM_NAO) == Mensagens.BTN_SIM) {
             System.exit(0);
         }
-        
-        PAUSA = false;
     }
 
 }

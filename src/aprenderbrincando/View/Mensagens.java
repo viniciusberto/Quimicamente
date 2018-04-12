@@ -1,5 +1,8 @@
 package aprenderbrincando.View;
 
+/**
+ * @author Vinicius Berto
+ */
 import aprenderbrincando.Config;
 import aprenderbrincando.Controller.Observado;
 import static aprenderbrincando.Recursos.obterCursor;
@@ -17,13 +20,16 @@ public class Mensagens extends JDialog {
     private static Mensagens msg;
 
     public static final int MSG_ACERTO = 0;
-    public static final int MSG_ERRO = 1;
+    public static final int MSG_ERRO_FORMULA = 1;
     public static final int MSG_INFORMACAO = 2;
+    public static final int MSG_ERRO = -1;
 
     public static final int BTN_SIM = 3;
     public static final int BTN_NAO = 4;
     public static final int BTN_CANCELAR = 8;
     public static final int BTN_OK = 9;
+    public static final float BTN_SIM_NAO = 10;
+    public static final float BTN_SIM_NAO_CANCELAR = 11;
 
     public static final int DLG_CONFIRMACAO = 5;
     public static final int DLG_ENTRADA = 6;
@@ -77,55 +83,6 @@ public class Mensagens extends JDialog {
         this.titulo = titulo;
     }
 
-    private void desenharFrame() {
-        setSize(Config.convertTamanho(49, 72));
-        setAlwaysOnTop(true);
-        setLayout(new java.awt.BorderLayout());
-        setUndecorated(true);
-        fonteMensagem = fontePadrao.deriveFont((float) Config.convertTamanhoFonte(45));
-        fonteMensagemInformacao = fontePadrao.deriveFont((float) Config.convertTamanhoFonte(35));
-        fonteBotao = fontePadrao.deriveFont((float) Config.convertTamanhoFonte(30));
-        fonteTitulo = fontePadrao.deriveFont((float) Config.convertTamanhoFonte(30));
-        fonteCaixaTexto = fontePadrao.deriveFont((float) Config.convertTamanhoFonte(30));
-        setCursor(obterCursor("Cursor"));
-    }
-
-    private void desenharTopo() {
-
-        pnlTopo = new JPanel();
-
-        lblTitulo = new JLabel();
-        btnSair = new JButton();
-
-        pnlTopo.setPreferredSize(new Dimension(5, 36));
-        pnlTopo.setLayout(new BorderLayout());
-        pnlTopo.setBackground(corTopo);
-
-        lblTitulo.setFont(fonteTitulo);
-        lblTitulo.setForeground(Color.BLACK);
-        lblTitulo.setText("  " + titulo);
-        pnlTopo.add(lblTitulo, BorderLayout.WEST);
-
-        btnSair.setText("X");
-        btnSair.setFont(fonteBotao);
-        btnSair.setFocusCycleRoot(false);
-        btnSair.setFocusPainted(false);
-        btnSair.setBackground(new Color(0, 0, 0, 0));
-        btnSair.setOpaque(false);
-        btnSair.setBorderPainted(false);
-        btnSair.setForeground(Color.BLACK);
-        btnSair.setContentAreaFilled(false);
-        btnSair.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                sair();
-            }
-        });
-
-        pnlTopo.add(btnSair, BorderLayout.EAST);
-        this.add(pnlTopo, BorderLayout.NORTH);
-    }
-
     private void desenharCorpo(int tipo) {
         pnlCorpo = new JPanel();
         pnlEntrada = new JPanel();
@@ -154,11 +111,11 @@ public class Mensagens extends JDialog {
         txtEntrada.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                if(e.getKeyCode() == KeyEvent.VK_ENTER){
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     btnOk.doClick();
                 }
             }
-            
+
         });
 
         lblMensagem.setForeground(corFonte);
@@ -171,7 +128,7 @@ public class Mensagens extends JDialog {
             lblImagem.setIcon(obterImagem(emoji, new Dimension(114, 114), Image.SCALE_SMOOTH));
         }
 
-        if (tipo == MSG_ERRO || tipo == MSG_ACERTO || tipo == MSG_INFORMACAO) {
+        if (tipo == MSG_ERRO_FORMULA || tipo == MSG_ACERTO || tipo == MSG_INFORMACAO) {
             pnlBotoes.setLayout(new GridLayout(3, 3));
             pnlBotoes.add(new JLabel());
             pnlBotoes.add(new JLabel());
@@ -247,10 +204,19 @@ public class Mensagens extends JDialog {
         desenharCorpo(tipo);
     }
 
-    public static int exibirDialogoConfirmacao(JFrame cpmnt, String titulo, String mensagem) {
+    public static int exibirDialogo(JFrame cpmnt, String titulo, String mensagem, float botoes) {
         msg = null;
         msg = new Mensagens(cpmnt, titulo, mensagem);
-        msg.dlgConfirmacao();
+        msg.dlgConfirmacao(botoes);
+        msg.setLocationRelativeTo(null);
+        msg.setVisible(true);
+        return msg.resposta_int;
+    }
+
+    public static int exibirDialogo(JFrame cpmnt, String titulo, String mensagem, int tipo, float botoes) {
+        msg = null;
+        msg = new Mensagens(cpmnt, titulo, mensagem);
+        msg.dlgConfirmacao(botoes);
         msg.setLocationRelativeTo(null);
         msg.setVisible(true);
         return msg.resposta_int;
@@ -280,8 +246,8 @@ public class Mensagens extends JDialog {
         }
 
         switch (tipo) {
-            case MSG_ERRO:
-                msg.msgErro();
+            case MSG_ERRO_FORMULA:
+                msg.msgErroFormula();
                 break;
             case MSG_ACERTO:
                 msg.msgAcerto();
@@ -289,9 +255,22 @@ public class Mensagens extends JDialog {
             case MSG_INFORMACAO:
                 msg.msgInformacao();
                 break;
+            case MSG_ERRO:
+                msg.msgErro();
+                break;
         }
         msg.setLocationRelativeTo(null);
         msg.setVisible(true);
+    }
+
+    private void msgErroFormula() {
+        corTopo = new Color(227, 0, 0);
+        corFonte = corTopo;
+        corFundo = Color.BLACK;
+        corBotao = new Color(127, 0, 0);
+        emoji = "Emoji-Erro";
+        construir(MSG_ERRO_FORMULA);
+        mensagem();
     }
 
     private void msgErro() {
@@ -299,9 +278,8 @@ public class Mensagens extends JDialog {
         corFonte = corTopo;
         corFundo = Color.BLACK;
         corBotao = new Color(127, 0, 0);
-        emoji = "Emoji-Erro";
-        construir(MSG_ERRO);
-        mensagem();
+        construir(MSG_INFORMACAO);
+        mensagemInformacao();
     }
 
     private void msgAcerto() {
@@ -324,13 +302,13 @@ public class Mensagens extends JDialog {
         repaint();
     }
 
-    private void dlgConfirmacao() {
+    private void dlgConfirmacao(float botoes) {
         corTopo = new Color(73, 179, 255);
         corFonte = corTopo;
         corFundo = Color.BLACK;
         corBotao = new Color(48, 116, 165);
         construir(DLG_CONFIRMACAO);
-        dialogoConfirmacao();
+        dialogoConfirmacao(botoes);
         repaint();
     }
 
@@ -359,24 +337,79 @@ public class Mensagens extends JDialog {
         repaint();
     }
 
-    private void dialogoConfirmacao() {
+    private void desenharFrame() {
+        setSize(Config.convertTamanho(49, 72));
+        setAlwaysOnTop(true);
+        setLayout(new java.awt.BorderLayout());
+        setUndecorated(true);
+        fonteMensagem = fontePadrao.deriveFont((float) Config.convertTamanhoFonte(45));
+        fonteMensagemInformacao = fontePadrao.deriveFont((float) Config.convertTamanhoFonte(35));
+        fonteBotao = fontePadrao.deriveFont((float) Config.convertTamanhoFonte(30));
+        fonteTitulo = fontePadrao.deriveFont((float) Config.convertTamanhoFonte(30));
+        fonteCaixaTexto = fontePadrao.deriveFont((float) Config.convertTamanhoFonte(30));
+        setCursor(obterCursor("Cursor"));
+    }
+
+    private void desenharTopo() {
+
+        pnlTopo = new JPanel();
+
+        lblTitulo = new JLabel();
+        btnSair = new JButton();
+
+        pnlTopo.setPreferredSize(new Dimension(5, 36));
+        pnlTopo.setLayout(new BorderLayout());
+        pnlTopo.setBackground(corTopo);
+
+        lblTitulo.setFont(fonteTitulo);
+        lblTitulo.setForeground(Color.BLACK);
+        lblTitulo.setText("  " + titulo);
+        pnlTopo.add(lblTitulo, BorderLayout.WEST);
+
+        btnSair.setText("X");
+        btnSair.setFont(fonteBotao);
+        btnSair.setFocusCycleRoot(false);
+        btnSair.setFocusPainted(false);
+        btnSair.setBackground(new Color(0, 0, 0, 0));
+        btnSair.setOpaque(false);
+        btnSair.setBorderPainted(false);
+        btnSair.setForeground(Color.BLACK);
+        btnSair.setContentAreaFilled(false);
+        btnSair.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                sair();
+            }
+        });
+
+        pnlTopo.add(btnSair, BorderLayout.EAST);
+        this.add(pnlTopo, BorderLayout.NORTH);
+    }
+
+    private void dialogoConfirmacao(float botoes) {
         setSize(Config.convertTamanho(49, 39));
         pnlCorpo.setBackground(corFundo);
         pnlCorpo.setLayout(new BorderLayout());
         pnlCorpo.add(lblMensagem, BorderLayout.CENTER);
-        pnlBotoes.setLayout(new GridLayout(3, 4, 10, 0));
+        pnlBotoes.setLayout(new GridLayout(3, 3, 10, 0));
+        
         pnlBotoes.add(new JLabel());
         pnlBotoes.add(new JLabel());
         pnlBotoes.add(new JLabel());
+
+        pnlBotoes.add(new JLabel());
+        JPanel pnlCentro = new JPanel();
+        pnlCentro.setLayout(new GridLayout(1,3,10,0));
+        pnlCentro.add(btnSim);
+        pnlCentro.add(btnNao);
+        pnlCentro.add(btnCancelar);
+        pnlBotoes.add(pnlCentro);
+        pnlBotoes.add(new JLabel());
+        
         pnlBotoes.add(new JLabel());
         pnlBotoes.add(new JLabel());
-        pnlBotoes.add(btnSim);
-        pnlBotoes.add(btnNao);
         pnlBotoes.add(new JLabel());
-        pnlBotoes.add(new JLabel());
-        pnlBotoes.add(new JLabel());
-        pnlBotoes.add(new JLabel());
-        pnlBotoes.add(new JLabel());
+        
         pnlCorpo.add(pnlBotoes, BorderLayout.SOUTH);
         repaint();
     }

@@ -1,21 +1,16 @@
 package aprenderbrincando.View.Execucao;
 
+/**
+ * @author Vinicius Berto
+ */
+
 import static aprenderbrincando.Recursos.obterCursor;
 import static aprenderbrincando.Recursos.obterImagem;
 import aprenderbrincando.View.Animacoes;
-import aprenderbrincando.View.BotaoFormula;
+import aprenderbrincando.View.MenuPausa.MenuPausa;
 import aprenderbrincando.View.Telas;
-import static aprenderbrincando.View.Manipuladores.*;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import javax.swing.JButton;
 
-/**
- *
- * @author Vinicius Berto
- */
 public class Execucao extends Telas {
 
     private PnlTopoExecucao topo;
@@ -49,7 +44,6 @@ public class Execucao extends Telas {
 
     public void adicionarMenuLateral(String nome, String formula) {
         lateral.adicionar(nome, formula);
-    }
-
+    }    
 
 }

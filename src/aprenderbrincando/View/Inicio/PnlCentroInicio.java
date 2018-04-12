@@ -1,20 +1,21 @@
 package aprenderbrincando.View.Inicio;
 
+/**
+ * @author Vinicius Berto
+ */
+
 import aprenderbrincando.Config;
 import static aprenderbrincando.Controller.ControllerExecucao.getTa;
 import static aprenderbrincando.Recursos.obterCursor;
 import static aprenderbrincando.Recursos.obterImagem;
 import aprenderbrincando.View.BotaoTransparente;
 import aprenderbrincando.View.Manipuladores;
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.Image;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-/**
- *
- * @author Vinicius Berto
- */
 public class PnlCentroInicio extends JPanel {
 
     private JPanel pnlIniciar;
@@ -37,27 +38,30 @@ public class PnlCentroInicio extends JPanel {
 
         pnlIniciar = new JPanel(null);
         pnlIniciar.setOpaque(false);
+        pnlIniciar.setBackground(Color.red);
 
         pnlRanking = new JPanel(null);
         pnlRanking.setOpaque(false);
+        pnlRanking.setBackground(Color.white);
 
         pnlSair = new JPanel(null);
         pnlSair.setOpaque(false);
+        pnlSair.setBackground(Color.yellow);
 
         btnIniciar = new BotaoTransparente("Iniciar");
-        Manipuladores.centralizar(pnlIniciar, btnIniciar, Manipuladores.FLOW);
+        Manipuladores.centralizarFlow(pnlIniciar, btnIniciar);
         btnIniciar.setIcon(obterImagem("Botao-Iniciar", Config.convertTamanho(30, 17), Image.SCALE_SMOOTH));
         btnIniciar.addActionListener(getTa());
         btnIniciar.addKeyListener(getTa());
         
         btnRanking = new BotaoTransparente("Ranking");
-        Manipuladores.centralizar(pnlRanking, btnRanking, Manipuladores.FLOW);
+        Manipuladores.centralizarFlow(pnlRanking, btnRanking);
         btnRanking.setIcon(obterImagem("Botao-Ranking", Config.convertTamanho(30, 17), Image.SCALE_SMOOTH));
         btnRanking.addActionListener(getTa());
         btnRanking.addKeyListener(getTa());
         
         btnSair = new BotaoTransparente("Sair");
-        Manipuladores.centralizar(pnlSair, btnSair, Manipuladores.FLOW);
+        Manipuladores.centralizarFlow(pnlSair, btnSair);
         btnSair.setIcon(obterImagem("Botao-Sair", Config.convertTamanho(30, 17), Image.SCALE_SMOOTH));
         btnSair.addActionListener(getTa());
         btnSair.addKeyListener(getTa());

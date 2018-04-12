@@ -1,15 +1,13 @@
 package aprenderbrincando.Controller;
 
+/**
+ * @author Vinicius Berto
+ */
+
 import static aprenderbrincando.Config.*;
-import aprenderbrincando.Model.Dao.RankingDAO;
-import aprenderbrincando.Model.Vo.RankingVO;
 import aprenderbrincando.View.Execucao.Execucao;
 import aprenderbrincando.View.Mensagens;
 
-/**
- *
- * @author Vinicius Berto
- */
 public class Validacao {
 
     private Partida partida;
@@ -58,7 +56,6 @@ public class Validacao {
             partida.setFormulaAtual(nivel.formulaAtual());
             tela.getMeio().repaint();
             PAUSA = false;
-
         } else {
             if (verificarFim()) {
                 Mensagens.exibirMensagem(tela, "Parabéns", "Você acertou!", Mensagens.MSG_ACERTO);
@@ -70,7 +67,7 @@ public class Validacao {
     private void erro() {
         partida.setPontuacao(partida.getPontuacao() - PONTOS_ERRO);
         if (verificarFim()) {
-            Mensagens.exibirMensagem(tela, "Que pena", "Você errou!", Mensagens.MSG_ERRO);
+            Mensagens.exibirMensagem(tela, "Que pena", "Você errou!", Mensagens.MSG_ERRO_FORMULA);
             partida.setQtdErros(partida.getQtdErros() + 1);
         }
     }
@@ -80,7 +77,7 @@ public class Validacao {
         if (partida.getPontuacao() <= 0) {
             partida.setPontuacao(0);
             partida.setQtdErros(partida.getQtdErros() + 1);
-//            ce.salvar();
+            ce.salvar();
             PAUSA = true;
             ce.removerBotoes();
             Mensagens.exibirMensagem(tela, nivel, "Que pena, " + partida.getNomeJogador() + "!", "<html><center><p> Fim do jogo sua pontuação zerou!</p></center>"
@@ -94,7 +91,7 @@ public class Validacao {
             ver = false;
 
         } else if (nivel.getId() == 8 && partida.getQtdAcertos() == 4) {
-            // ce.salvar();
+             ce.salvar();
             PAUSA = true;
             ce.removerBotoes();
             Mensagens.exibirMensagem(tela, nivel, "Parabéns", "<html><center><p> Você chegou ao fim do jogo!</p></center>"

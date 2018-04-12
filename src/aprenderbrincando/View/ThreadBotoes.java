@@ -1,5 +1,9 @@
 package aprenderbrincando.View;
 
+/**
+ * @author Vinicius Berto
+ */
+
 import aprenderbrincando.Config;
 import static aprenderbrincando.Config.TEMPO_BOTAO;
 import static aprenderbrincando.View.Manipuladores.*;
@@ -7,10 +11,6 @@ import java.util.List;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 
-/**
- *
- * @author Vinicius Berto
- */
 public class ThreadBotoes extends Thread {
 
     List<BotaoFormula> lista;

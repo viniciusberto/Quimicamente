@@ -1,60 +1,131 @@
 package aprenderbrincando;
 
 /**
- * Trocar por XML
- *
  * @author Vinicius Berto
  */
-import aprenderbrincando.Controller.Partida;
+
 import java.awt.Dimension;
-import java.awt.Toolkit;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.awt.DisplayMode;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import static java.lang.Math.round;
-import javax.swing.JButton;
 
 public class Config {
 
+    /**
+     * Localização do diretório de imagens dentro dos recursos da aplicação.
+     */
+    public static String DIR_IMAGENS;
+
+    /**
+     * Localização do diretório de cursores dentro dos recursos da aplicação.
+     */
+    public static String DIR_CURSOR;
+
+    /**
+     * Localização do diretório de fontes dentro dos recursos da aplicação.
+     */
+    public static String DIR_FONTE;
+
+    /**
+     * String que contém a localização do banco de dados.
+     */
     public static String URL_BANCO;
-    public static String URL_APPLET;
+
+    /**
+     * String que contém o path da aplicação.
+     */
+    public static String DIR_APPLET;
+
+    /**
+     * String que contém o nome do arquivo binário da aplicação.
+     */
     public static String JAR_FILE;
 
     /**
-     * Ref para o método convertTamanhoLA
+     * Referência para o método convertTamanhoLA int LARGURA = 1.
      */
     public static int LARGURA = 1;
+
+    /**
+     * Referência para a altura no método converte tamanhoLA int ALTURA = 2.
+     */
     public static int ALTURA = 2;
 
-    /*Valores Estáticos*/
+    /**
+     * Pontos que o jogador receberá toda vez que acertar.
+     */
     public static int PONTOS_ACERTO;
+
+    /**
+     * Pontos que o jogador irá perder toda vez que errar uma fórmula.
+     */
     public static int PONTOS_ERRO;
+
+    /**
+     * Tempo em que cada botão permanecerá na tela.
+     */
     public static int TEMPO_BOTAO;
-    public static Partida PARTIDA_ATUAL;
+
+    /**
+     * Define o status do reposicionamento dos botões na tela Quando = true: Os
+     * botões não se movimentão na tela.
+     */
     public static boolean PAUSA;
 
-    /*Telas*/
-    private static final Toolkit TOO = Toolkit.getDefaultToolkit();
-    public static final Dimension TAM_TELA = /*new Dimension(1280, 1024);*/ TOO.getScreenSize();
+    private static final GraphicsEnvironment GE = GraphicsEnvironment.getLocalGraphicsEnvironment();
+    private static final GraphicsDevice[] GDS = GE.getScreenDevices();
+    private static final GraphicsDevice GD = GDS[0];
+    private static final DisplayMode dm = GD.getDisplayMode();
+
+    /**
+     * Resolução da tela em px.
+     */
+    public static final Dimension TAM_TELA = new Dimension(dm.getWidth(), dm.getHeight());
+
+    /**
+     * Serve para verificar a proporção da tela.
+     */
     public static boolean WIDESCREEM;
-    public static Dimension TAM_NORTE_EXE, TAM_SUL_EXE, TAM_CENTRO_EXE, TAM_LATERAL_EXE;
+
+    /**
+     * Define o tamanho dos componentes da tela de execução.
+     */
+    public static Dimension TAM_NORTE_EXE, TAM_CENTRO_EXE, TAM_LATERAL_EXE;
+
+    /**
+     * Define a quantidade de linha e colunas da matriz de boolean que
+     * representa os pixels da tela utilizada para evitar a sobreposição dos
+     * botões de formula durante o reposicionamento.
+     */
     public static int LINHAS, COLUNAS;
+
+    /**
+     * Matriz de boolean que representa os pixels da tela utilizada para evitar
+     * a sobreposição dos botões de formula durante o reposicionamento.
+     */
     public static boolean[][] MATRIZ;
+
+    /**
+     * Tamanho da fonte dos botões de fórmula.
+     */
     public static int TAM_FONTE_BTN_FORMULA;
+
+    /**
+     * Tamanho da fonte dos labels de status da tela de execução ou seja, os que
+     * exibem pontuação, fórmula atual e nível.
+     */
     public static int TAM_FONTE_LBL_EXECUCAO;
+
+    /**
+     * Armazena a quantidade de botões que estão sendo exibidos na tela.
+     */
     public static int QUANTIDADE_BOTOES;
 
-    public static String DIR_IMAGENS;
-    public static String DIR_CURSOR;
-    public static String DIR_FONTE;
-
     public Config() {
-        URL_APPLET = getClass().getResource("").toString();
+        DIR_APPLET = getClass().getResource("").toString();
         nomeArquivoJAR();
-
+        
         /*Banco de dados*/
         String caminhoBanco = null;
         String resourceBanco = "/aprenderbrincando/Model/Database/";
@@ -71,10 +142,9 @@ public class Config {
         } else {
             caminhoBanco = "Save/";
             caminhoLib = "lib/";
-            copiarArquivo(resourceLib, resourceLibFile, caminhoLib, "sqlite-jdbc-3.20.0", "jar");
+            Recursos.copiarArquivo(resourceLib, resourceLibFile, caminhoLib, "sqlite-jdbc-3.20.0", "jar");
         }
-        System.out.println("");
-        URL_BANCO = copiarArquivo(resourceBanco, resourceBancoFile, caminhoBanco, "saves", "dat");
+        URL_BANCO = Recursos.copiarArquivo(resourceBanco, resourceBancoFile, caminhoBanco, "saves", "dat");
 
         QUANTIDADE_BOTOES = 10;
         WIDESCREEM = false;
@@ -107,66 +177,26 @@ public class Config {
     }
 
     private void nomeArquivoJAR() {
-        int FIM = URL_APPLET.indexOf(".jar");
-        int INICIO = FIM;
-        while (!URL_APPLET.substring(INICIO, INICIO + 1).equals("/")) {
-            INICIO--;
-            if (INICIO == 0) {
-                break;
-            }
-        }
-        JAR_FILE = URL_APPLET.substring(INICIO + 1, FIM) + ".jar";
-    }
+        int INICIO = 0, FIM = 0;
 
-    public static String copiarArquivo(String caminhoOrigem, String nomeOrigem, String caminhoDestino, String nomeDestino, String formatoDestino) {
-        String retorno = null;
-        File fl;
-        fl = new File(caminhoDestino);
-        JButton btn = new JButton();
+        if (!DIR_APPLET.contains("build")) {
+            INICIO = FIM = DIR_APPLET.indexOf(".jar");
 
-        if (!fl.exists()) {
-            fl.mkdirs();
-            InputStream is = null;
-            OutputStream os = null;
-            try {
-                is = btn.getClass().getResourceAsStream(caminhoOrigem + nomeOrigem);
-                os = new FileOutputStream(caminhoDestino + nomeDestino + "." + formatoDestino);
-                File templateFile = File.createTempFile(caminhoDestino + nomeDestino, formatoDestino);
-                byte[] buffer = new byte[1024];
-                int length;
-                while ((length = is.read(buffer)) > 0) {
-                    os.write(buffer, 0, length);
+            while (!DIR_APPLET.substring(INICIO, INICIO + 1).equals("/")) {
+                INICIO--;
+                if (INICIO == 0) {
+                    break;
                 }
-                is.close();
-                os.close();
-                retorno = caminhoDestino + nomeDestino + "." + formatoDestino;
-                if (nomeDestino.contains("jdbc")) {
-                    try {
-                        Process Processo = Runtime.getRuntime().exec("java -jar " + JAR_FILE);
-                    } catch (IOException MensagemdeErro) {
-                        System.out.println(MensagemdeErro);
-                    }
-                    System.exit(0);
-                }
-            } catch (FileNotFoundException ex) {
-                ex.printStackTrace();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            } catch (NullPointerException ne) {
-                ne.printStackTrace();
             }
-
+            JAR_FILE = DIR_APPLET.substring(INICIO + 1, FIM) + ".jar";
         } else {
-            retorno = caminhoDestino + nomeDestino + "." + formatoDestino;
+            JAR_FILE = null;
         }
-
-        return retorno;
     }
 
     /**
-     *
      * convertTamanho converte porcentagem em valores inteiros referentes ao
-     * tamanho da tela.
+     * tamanho e proporção da tela.
      *
      * @param valor1 porcentagem da largura da tela;
      * @param valor2 porcentagem da altura da tela;
@@ -219,6 +249,9 @@ public class Config {
         return round(c1.floatValue());
     }
 
+    /**
+     * Faz a verificação da escala da tela através da proporção.
+     */
     public static void verificarEscalaDaTela() {
         Double valor = (double) TAM_TELA.width / TAM_TELA.height;
         if (valor >= 1.6) {
@@ -226,18 +259,29 @@ public class Config {
         }
     }
 
+    /**
+     * Define o tamanho da fonte dos botões de fórmula da tela de execução de
+     * acordo com a resolução da tela.
+     */
     public static void setTAM_FONTE_BTN_FORMULA() {
         Double c1;
         if (TAM_TELA.height > 900 && TAM_TELA.width < 1500) {
             c1 = (double) 18 * TAM_TELA.height;
         } else {
-            c1 = (double) 24 * TAM_TELA.height;
+            c1 = (double) 22 * TAM_TELA.height;
         }
 
         c1 = (double) c1 / 1024;
         Config.TAM_FONTE_BTN_FORMULA = round(c1.floatValue());
     }
 
+    /**
+     * Altera o tamanho da fonte recebido pelo paramentro de acordo com a
+     * resolução da tela
+     *
+     * @param tamanho tamanho da fonte a ser alterado
+     * @return retorna o tamanho proporciona a resolução da tela
+     */
     public static int convertTamanhoFonte(int tamanho) {
         Double c1;
         c1 = (double) tamanho * TAM_TELA.height;
@@ -245,6 +289,10 @@ public class Config {
         return round(c1.floatValue());
     }
 
+    /**
+     * Define o tamanho da fonte dos labels de status da tela de execução de
+     * acordo com a resolução da tela.
+     */
     public static void setTAM_FONTE_LBL_EXECUCAO() {
         Double c1;
         c1 = (double) 20 * TAM_TELA.height;
@@ -253,7 +301,7 @@ public class Config {
     }
 
     /**
-     * inicializarMATRIZ popula a matriz com valores false.
+     * Popula a matriz de pixels com valores false.
      *
      * @param linhas
      * @param colunas
@@ -269,26 +317,38 @@ public class Config {
 
     }
 
+    /**
+     * Altera a quantidade de linhas e colunas da matriz de pixels através dos
+     * parametros
+     *
+     * @param linhas
+     * @param colunas
+     */
     public static void alterarLinhasColunas(int linhas, int colunas) {
         LINHAS = linhas;
         COLUNAS = colunas;
         TAM_CENTRO_EXE = new Dimension(colunas, linhas);
     }
 
+    /**
+     * Define o tempo em que cada botão irá ficar na tela o tempo padrão é 5s
+     * por botão.
+     */
     public static void setTEMPO_BOTOES() {
         TEMPO_BOTAO = 5000 / QUANTIDADE_BOTOES;
     }
 
+    /**
+     *Simplemente escreve uma string no console e encerra a aplicação
+     * este método serve para auxiliar no processo de desenvolvimento
+     * facilitando na coleta de detalhes sobre erros.
+     * 
+     * @param exibir
+     */
     public static void DebugFunction(Object exibir) {
         System.out.println("");
         System.out.println("");
-        System.out.println("");
-        System.out.println("");
-        System.out.println("");
         System.out.println(exibir);
-        System.out.println("");
-        System.out.println("");
-        System.out.println("");
         System.out.println("");
         System.out.println("");
         System.exit(0);

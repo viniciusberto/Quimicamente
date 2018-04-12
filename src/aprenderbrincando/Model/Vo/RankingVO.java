@@ -1,9 +1,9 @@
 package aprenderbrincando.Model.Vo;
 
 /**
- *
  * @author Vinicius Berto
  */
+
 public class RankingVO {
     private int cod;
     private String nome;

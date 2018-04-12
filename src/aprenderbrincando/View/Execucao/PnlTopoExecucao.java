@@ -1,5 +1,9 @@
 package aprenderbrincando.View.Execucao;
 
+/**
+ * @author Vinicius Berto
+ */
+
 import static aprenderbrincando.Config.TAM_NORTE_EXE;
 import static aprenderbrincando.Config.convertTamanho;
 import static aprenderbrincando.Recursos.obterImagem;

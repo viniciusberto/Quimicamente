@@ -1,5 +1,9 @@
 package aprenderbrincando.View;
 
+/**
+ * @author Vinicius Berto
+ */
+
 import aprenderbrincando.Controller.ControllerExecucao;
 import static aprenderbrincando.Controller.ControllerExecucao.getTa;
 import static aprenderbrincando.Recursos.obterImagem;
@@ -8,10 +12,6 @@ import static aprenderbrincando.View.Manipuladores.*;
 import java.awt.Image;
 import java.awt.Point;
 
-/**
- *
- * @author Vinicius
- */
 public class BotaoFormula extends JButton {
 
     public BotaoFormula(String texto, String nome) {
