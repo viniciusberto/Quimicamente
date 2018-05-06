@@ -14,7 +14,7 @@ public class Conexao {
     private final Connection connection = null;
 
     /**
-     * Cria uma conexão com o banco de dados
+     * Classe responsável por criar uma conexão com banco de dados.
      *
      * @return
      */
@@ -32,7 +32,7 @@ public class Conexao {
                 div += msg.substring(0, 40) + "<br>";
                 msg = msg.substring(40, msg.length());
             }
-            
+
             div += msg;
 
             Mensagens.exibirMensagem(null, "Erro!", "<html>"

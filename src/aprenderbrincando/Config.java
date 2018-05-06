@@ -1,15 +1,18 @@
 package aprenderbrincando;
 
-/**
- * @author Vinicius Berto
- */
-
 import java.awt.Dimension;
 import java.awt.DisplayMode;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import static java.lang.Math.round;
 
+/**
+ * Classe responsável por amazenar as informações padrão para inicio da execução
+ * do game e algumas funções estáticas que serão utilizadas em várias partes do
+ * código.
+ *
+ * @author vinicius
+ */
 public class Config {
 
     /**
@@ -68,7 +71,7 @@ public class Config {
     public static int TEMPO_BOTAO;
 
     /**
-     * Define o status do reposicionamento dos botões na tela Quando = true: Os
+     * Define o status do reposicionamento dos botões na tela Quando = true: os
      * botões não se movimentão na tela.
      */
     public static boolean PAUSA;
@@ -76,12 +79,12 @@ public class Config {
     private static final GraphicsEnvironment GE = GraphicsEnvironment.getLocalGraphicsEnvironment();
     private static final GraphicsDevice[] GDS = GE.getScreenDevices();
     private static final GraphicsDevice GD = GDS[0];
-    private static final DisplayMode dm = GD.getDisplayMode();
+    private static final DisplayMode DM = GD.getDisplayMode();
 
     /**
      * Resolução da tela em px.
      */
-    public static final Dimension TAM_TELA = new Dimension(dm.getWidth(), dm.getHeight());
+    public static final Dimension TAM_TELA = new Dimension(DM.getWidth(), DM.getHeight());
 
     /**
      * Serve para verificar a proporção da tela.
@@ -125,13 +128,13 @@ public class Config {
     public Config() {
         DIR_APPLET = getClass().getResource("").toString();
         nomeArquivoJAR();
-        
+
         /*Banco de dados*/
-        String caminhoBanco = null;
+        String caminhoBanco;
         String resourceBanco = "/aprenderbrincando/Model/Database/";
         String resourceBancoFile = "Banco.db";
 
-        String caminhoLib = null;
+        String caminhoLib;
         String resourceLib = "/aprenderbrincando/Assets/lib/";
         String resourceLibFile = "sqlite-jdbc-3.20.0.jar";
 
@@ -177,7 +180,7 @@ public class Config {
     }
 
     private void nomeArquivoJAR() {
-        int INICIO = 0, FIM = 0;
+        int INICIO, FIM;
 
         if (!DIR_APPLET.contains("build")) {
             INICIO = FIM = DIR_APPLET.indexOf(".jar");
@@ -208,8 +211,6 @@ public class Config {
             aux = (double) 1.33 * valor1;
             aux = (double) aux / 1.77;
             valor1 = round(aux.floatValue());
-
-            aux = null;
 
             aux = (double) 1.33 * valor2;
             aux = (double) aux / 1.77;
@@ -339,10 +340,10 @@ public class Config {
     }
 
     /**
-     *Simplemente escreve uma string no console e encerra a aplicação
-     * este método serve para auxiliar no processo de desenvolvimento
-     * facilitando na coleta de detalhes sobre erros.
-     * 
+     * Simplemente escreve uma string no console e encerra a aplicação este
+     * método serve para auxiliar no processo de desenvolvimento facilitando na
+     * coleta de detalhes sobre erros.
+     *
      * @param exibir
      */
     public static void DebugFunction(Object exibir) {
