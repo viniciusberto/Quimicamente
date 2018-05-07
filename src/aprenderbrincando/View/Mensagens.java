@@ -9,7 +9,6 @@ import static aprenderbrincando.Recursos.obterCursor;
 import static aprenderbrincando.Recursos.obterImagem;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.*;
@@ -58,17 +57,17 @@ public class Mensagens extends JDialog {
     private Color corFonteBotao;
 
     private String emoji;
-    private String titulo;
-    private String mensagem;
+    private final String titulo;
+    private final String mensagem;
 
-    private Font fontePadrao = new Font("Arial Black", Font.BOLD, Config.convertTamanhoFonte(45));
+    private final Font fontePadrao = new Font("Arial Black", Font.BOLD, Config.convertTamanhoFonte(45));
     private Font fonteTitulo;
     private Font fonteMensagem;
     private Font fonteMensagemInformacao;
     private Font fonteBotao;
     private Font fonteCaixaTexto;
 
-    private int dialogo = 3;
+    private final int dialogo = 3;
 
     private int resposta_int = BTN_NAO;
     private String resposta_str = "";
@@ -146,12 +145,9 @@ public class Mensagens extends JDialog {
         btnSim.setText("Sim");
         btnSim.setBorder(new LineBorder(corFonteBotao, 2));
         btnSim.setForeground(corFonteBotao);
-        btnSim.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                resposta_int = BTN_SIM;
-                sair();
-            }
+        btnSim.addActionListener((ActionEvent e) -> {
+            resposta_int = BTN_SIM;
+            sair();
         });
 
         btnNao.setBackground(corBotao);
@@ -159,12 +155,9 @@ public class Mensagens extends JDialog {
         btnNao.setText("Não");
         btnNao.setBorder(new LineBorder(corFonteBotao, 2));
         btnNao.setForeground(corFonteBotao);
-        btnNao.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                resposta_int = BTN_NAO;
-                sair();
-            }
+        btnNao.addActionListener((ActionEvent e) -> {
+            resposta_int = BTN_NAO;
+            sair();
         });
 
         btnOk.setBackground(corBotao);
@@ -172,13 +165,10 @@ public class Mensagens extends JDialog {
         btnOk.setText("OK");
         btnOk.setBorder(new LineBorder(corFonteBotao, 2));
         btnOk.setForeground(corFonteBotao);
-        btnOk.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                resposta_int = BTN_OK;
-                resposta_str = txtEntrada.getText();
-                sair();
-            }
+        btnOk.addActionListener((ActionEvent e) -> {
+            resposta_int = BTN_OK;
+            resposta_str = txtEntrada.getText();
+            sair();
         });
 
         btnCancelar.setBackground(corBotao);
@@ -186,12 +176,9 @@ public class Mensagens extends JDialog {
         btnCancelar.setText("Cancelar");
         btnCancelar.setBorder(new LineBorder(corFonteBotao, 2));
         btnCancelar.setForeground(corFonteBotao);
-        btnCancelar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                resposta_int = BTN_CANCELAR;
-                sair();
-            }
+        btnCancelar.addActionListener((ActionEvent e) -> {
+            resposta_int = BTN_CANCELAR;
+            sair();
         });
 
         this.add(pnlCorpo, BorderLayout.CENTER);
@@ -375,11 +362,8 @@ public class Mensagens extends JDialog {
         btnSair.setBorderPainted(false);
         btnSair.setForeground(Color.BLACK);
         btnSair.setContentAreaFilled(false);
-        btnSair.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                sair();
-            }
+        btnSair.addActionListener((ActionEvent e) -> {
+            sair();
         });
 
         pnlTopo.add(btnSair, BorderLayout.EAST);
@@ -392,24 +376,24 @@ public class Mensagens extends JDialog {
         pnlCorpo.setLayout(new BorderLayout());
         pnlCorpo.add(lblMensagem, BorderLayout.CENTER);
         pnlBotoes.setLayout(new GridLayout(3, 3, 10, 0));
-        
+
         pnlBotoes.add(new JLabel());
         pnlBotoes.add(new JLabel());
         pnlBotoes.add(new JLabel());
 
         pnlBotoes.add(new JLabel());
         JPanel pnlCentro = new JPanel();
-        pnlCentro.setLayout(new GridLayout(1,3,10,0));
+        pnlCentro.setLayout(new GridLayout(1, 3, 10, 0));
         pnlCentro.add(btnSim);
         pnlCentro.add(btnNao);
         pnlCentro.add(btnCancelar);
         pnlBotoes.add(pnlCentro);
         pnlBotoes.add(new JLabel());
-        
+
         pnlBotoes.add(new JLabel());
         pnlBotoes.add(new JLabel());
         pnlBotoes.add(new JLabel());
-        
+
         pnlCorpo.add(pnlBotoes, BorderLayout.SOUTH);
         repaint();
     }

@@ -19,24 +19,25 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 /**
- * Classe responsável por recuperar os recursos da aplicação
- * 
+ * Classe responsável por recuperar os arquivos de recursos da aplicação
+ *
  * @author vinicius
  */
 public class Recursos {
 
-    private static Recursos RECURSOS = new Recursos();
-    private static Toolkit TOO = Toolkit.getDefaultToolkit();
+    private static final Recursos RECURSOS = new Recursos();
+    private static final Toolkit TOO = Toolkit.getDefaultToolkit();
 
     /**
-     * Método responsável por obter uma imagem dos recursos da aplicação 
-     * e redimensionar de acordo com as proporções passadas pelos parametros;
+     * Método responsável por obter uma imagem dos recursos da aplicação e
+     * redimensionar de acordo com as proporções passadas pelos parametros;
      *
      * @param imagem Caminho da imagem a ser redimencionada
      * @param tamanho Dimensão/Formato da imagem
      * @param escala Forma como a imagem será redimensionada pode se
-     * Image.SCALE_REPLICATE, Image.SCALE_SMOOTH, Image.SCALE_FAST e Image.SCALE_DEFAULT 
-     * o ideal é utilizar o Image.SCALE_SMOOTH pois redimensiona com melhor qualidade
+     * Image.SCALE_REPLICATE, Image.SCALE_SMOOTH, Image.SCALE_FAST e
+     * Image.SCALE_DEFAULT o ideal é utilizar o Image.SCALE_SMOOTH pois
+     * redimensiona com melhor qualidade
      * @return retorna um ImageIcon
      */
     public static ImageIcon obterImagem(String imagem, Dimension tamanho, int escala) {
@@ -48,13 +49,14 @@ public class Recursos {
     }
 
     /**
-     *Método responsável por obter um cursor de mouse dos recursos da aplicação.
-     * 
+     * Método responsável por obter um cursor de mouse dos recursos da
+     * aplicação.
+     *
      * @param nome nome do cursor a ser utilizado sem extensão.
      * @return retorna um Cursor
      */
     public static Cursor obterCursor(String nome) {
-        return TOO.createCustomCursor(new ImageIcon(RECURSOS.getClass().getResource(DIR_CURSOR+nome + ".png")).getImage(), new Point(0, 0), "Ponteiro");
+        return TOO.createCustomCursor(new ImageIcon(RECURSOS.getClass().getResource(DIR_CURSOR + nome + ".png")).getImage(), new Point(0, 0), "Ponteiro");
     }
 
     /**
@@ -73,9 +75,7 @@ public class Recursos {
         try {
             fnt = Font.createFont(Font.TRUETYPE_FONT, is);
             is.close();
-        } catch (FontFormatException ex) {
-            Logger.getLogger(Config.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
+        } catch (FontFormatException | IOException ex) {
             Logger.getLogger(Config.class.getName()).log(Level.SEVERE, null, ex);
         }
         return fnt.deriveFont(tamanho);
@@ -101,8 +101,8 @@ public class Recursos {
         JButton btn = new JButton();
         if (!fl.exists()) {
             fl.mkdirs();
-            InputStream is = null;
-            OutputStream os = null;
+            InputStream is;
+            OutputStream os;
             try {
                 is = btn.getClass().getResourceAsStream(caminhoOrigem + nomeOrigem);
                 os = new FileOutputStream(caminhoDestino + nomeDestino + "." + formatoDestino);
@@ -124,11 +124,9 @@ public class Recursos {
                     System.exit(0);
                 }
             } catch (FileNotFoundException ex) {
-                ex.printStackTrace();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            } catch (NullPointerException ne) {
-                ne.printStackTrace();
+                //Implementar sistema de log
+            } catch (IOException | NullPointerException ex) {
+                //Implementar sistema de log
             }
         } else {
             retorno = caminhoDestino + nomeDestino + "." + formatoDestino;
