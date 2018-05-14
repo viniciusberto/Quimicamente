@@ -19,7 +19,7 @@ public class Execucao extends Telas {
 
     public Execucao() {
         setCursor(obterCursor("Cursor"));
-        alteraImagemFundo(obterImagem("Fundo-Meio-Execucao", getSize(), Image.SCALE_SMOOTH));
+        alteraImagemFundo(obterImagem("FundoLimpo", getSize(), Image.SCALE_SMOOTH));
 
         topo = new PnlTopoExecucao();
         meio = new PnlMeioExecucao();

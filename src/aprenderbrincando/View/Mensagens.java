@@ -371,28 +371,51 @@ public class Mensagens extends JDialog {
     }
 
     private void dialogoConfirmacao(float botoes) {
+
         setSize(Config.convertTamanho(49, 39));
         pnlCorpo.setBackground(corFundo);
         pnlCorpo.setLayout(new BorderLayout());
         pnlCorpo.add(lblMensagem, BorderLayout.CENTER);
-        pnlBotoes.setLayout(new GridLayout(3, 3, 10, 0));
 
-        pnlBotoes.add(new JLabel());
-        pnlBotoes.add(new JLabel());
-        pnlBotoes.add(new JLabel());
+        if (botoes == BTN_SIM_NAO) {
+            pnlBotoes.setLayout(new GridLayout(3, 3, 0, 0));
+            pnlBotoes.add(new JLabel());
+            pnlBotoes.add(new JLabel());
+            pnlBotoes.add(new JLabel());
+            pnlBotoes.add(new JLabel());
+            JPanel pnlCentro = new JPanel();
+            pnlCentro.setLayout(new GridLayout(1, 2, 10, 0));
+            pnlCentro.add(btnSim);
+            pnlCentro.add(btnNao);
+            pnlCentro.setOpaque(false);
+            pnlBotoes.add(pnlCentro);
+            pnlBotoes.add(new JLabel());
+            pnlBotoes.add(new JLabel());
+            pnlBotoes.add(new JLabel());
+            pnlBotoes.add(new JLabel());
 
-        pnlBotoes.add(new JLabel());
-        JPanel pnlCentro = new JPanel();
-        pnlCentro.setLayout(new GridLayout(1, 3, 10, 0));
-        pnlCentro.add(btnSim);
-        pnlCentro.add(btnNao);
-        pnlCentro.add(btnCancelar);
-        pnlBotoes.add(pnlCentro);
-        pnlBotoes.add(new JLabel());
-
-        pnlBotoes.add(new JLabel());
-        pnlBotoes.add(new JLabel());
-        pnlBotoes.add(new JLabel());
+        } else if (botoes == BTN_SIM_NAO_CANCELAR) {
+            pnlBotoes.setLayout(new GridLayout(3, 3, 10, 0));
+            pnlBotoes.add(new JLabel());
+            pnlBotoes.add(new JLabel());
+            pnlBotoes.add(new JLabel());
+            pnlBotoes.add(new JLabel());
+            JPanel pnlCentro = new JPanel();
+            pnlCentro.setLayout(new GridLayout(1, 3, 10, 0));
+            btnSim.setFont(fontePadrao.deriveFont(15f));
+            btnNao.setFont(fontePadrao.deriveFont(15f));
+            btnCancelar.setFont(fontePadrao.deriveFont(15f));
+            btnCancelar.setMinimumSize(new Dimension(80,30));
+            pnlCentro.add(btnSim);
+            pnlCentro.add(btnNao);
+            pnlCentro.add(btnCancelar);
+            pnlCentro.setOpaque(false);
+            pnlBotoes.add(pnlCentro);
+            pnlBotoes.add(new JLabel());
+            pnlBotoes.add(new JLabel());
+            pnlBotoes.add(new JLabel());
+            pnlBotoes.add(new JLabel());
+        }
 
         pnlCorpo.add(pnlBotoes, BorderLayout.SOUTH);
         repaint();

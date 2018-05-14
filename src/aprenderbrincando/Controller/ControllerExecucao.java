@@ -175,7 +175,11 @@ public class ControllerExecucao implements Observador {
             if (r == MenuPausa.CANCELAR) {
                 Config.PAUSA = false;
             } else if (r == MenuPausa.ENCERRAR) {
-                if (Mensagens.exibirDialogo(telaExecucao, "Voltar ao menu inicial: ", "Deseja salvar a sua pontuação atual?", Mensagens.BTN_SIM_NAO) == Mensagens.BTN_SIM) {
+                int resp = Mensagens.exibirDialogo(telaExecucao, "Voltar ao menu inicial ", "Deseja salvar a sua pontuação atual?", Mensagens.BTN_SIM_NAO_CANCELAR);
+                if (resp == Mensagens.BTN_SIM) {
+                    salvar();
+                    encerrarPartida();
+                } else if (resp == Mensagens.BTN_NAO) {
                     encerrarPartida();
                 } else {
                     Config.PAUSA = false;

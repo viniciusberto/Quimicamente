@@ -6,6 +6,7 @@ package aprenderbrincando.View.Inicio;
 
 import aprenderbrincando.*;
 import static aprenderbrincando.Controller.ControllerExecucao.*;
+import aprenderbrincando.Controller.ControllerInicial;
 import static aprenderbrincando.Recursos.obterCursor;
 import static aprenderbrincando.Recursos.obterImagem;
 import aprenderbrincando.View.Telas;
@@ -24,6 +25,10 @@ public final class Inicio extends Telas {
         addKeyListener(getTa());
         inicializarComponentes();
         requestFocus();
+    }
+
+    public Inicio(ControllerInicial aThis) {
+       
     }
 
     public void inicializarComponentes() {

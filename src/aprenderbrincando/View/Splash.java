@@ -33,6 +33,5 @@ public class Splash extends JFrame {
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.add(lblFundo);
         this.setBackground(new Color(0, 0, 0, 0));
-        this.setVisible(true);
     }
 }
