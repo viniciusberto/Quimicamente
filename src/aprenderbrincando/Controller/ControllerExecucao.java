@@ -15,9 +15,11 @@ import aprenderbrincando.Model.Vo.Valores;
 import aprenderbrincando.View.Manipuladores;
 import aprenderbrincando.View.Mensagens;
 import aprenderbrincando.View.MenuPausa.MenuPausa;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 
-public class ControllerExecucao implements Observador {
+public class ControllerExecucao implements ActionListener {
 
     private Partida partida;
     private Execucao telaExecucao;
@@ -55,7 +57,7 @@ public class ControllerExecucao implements Observador {
                 Config cnf = new Config();
                 carregarDados();
                 carregarNivel();
-                partida = new Partida(this, nivel.formulaAtual(), nome);
+                partida = new Partida(null, nivel.formulaAtual(), nome);
             }
 
             telaExecucao = new Execucao();
@@ -72,7 +74,7 @@ public class ControllerExecucao implements Observador {
                 tbtn.start();
             }
 
-            atualizar(partida);
+//            atualizar(partida);
             Config.PAUSA = false;
             telaInicial.setVisible(false);
             telaExecucao.setVisible(true);
@@ -105,7 +107,7 @@ public class ControllerExecucao implements Observador {
     }
 
     public void carregarNivel() {
-        nivel = new Nivel(this);
+        nivel = new Nivel(null);
         nivel.gerarAtualizarListaAtual();
         nivel.criarBotoes();
     }
@@ -115,19 +117,19 @@ public class ControllerExecucao implements Observador {
         validacao.validar(texto);
     }
 
-    @Override
-    public void atualizar(Observado ob) {
-        if (ob.getClass().getName().indexOf("Partida") > 0) {
-            telaExecucao.getTopo().getLblPontos().setText(Manipuladores.estilizarLabels("Pontos: " + String.valueOf(partida.getPontuacao())));
-            telaExecucao.getTopo().getLblFormula().setText(Manipuladores.estilizarLabels("" + partida.getFormulaAtual().getNome()));
-            telaExecucao.getTopo().getLblNivel().setText(Manipuladores.estilizarLabels("Nível: " + String.valueOf(nivel.getId())));
-            telaExecucao.getMeio().repaint();
-        } else if ((ob.getClass().getName().indexOf("Nivel") > 0)) {
-
-            encerrarPartida();
-
-        }
-    }
+//    @Override
+//    public void atualizar(Observado ob) {
+//        if (ob.getClass().getName().indexOf("Partida") > 0) {
+//            telaExecucao.getTopo().getLblPontos().setText(Manipuladores.estilizarLabels("Pontos: " + String.valueOf(partida.getPontuacao())));
+//            telaExecucao.getTopo().getLblFormula().setText(Manipuladores.estilizarLabels("" + partida.getFormulaAtual().getNome()));
+//            telaExecucao.getTopo().getLblNivel().setText(Manipuladores.estilizarLabels("Nível: " + String.valueOf(nivel.getId())));
+//            telaExecucao.getMeio().repaint();
+//        } else if ((ob.getClass().getName().indexOf("Nivel") > 0)) {
+//
+//            encerrarPartida();
+//
+//        }
+//    }
 
     public void salvar() {
         RankingVO ranking = new RankingVO();
@@ -186,6 +188,13 @@ public class ControllerExecucao implements Observador {
                 }
             }
         }
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        
+        
+        
     }
 
 }

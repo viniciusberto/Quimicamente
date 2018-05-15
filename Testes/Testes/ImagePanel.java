@@ -26,7 +26,7 @@ public class ImagePanel extends JPanel {
 
     protected void desenhar() {
         setBounds(bound);
-       // setOpaque(false);
+        setOpaque(false);
         setLayout(null);
         setSize(this.bound.width, this.bound.height);
         setPreferredSize(new Dimension(this.bound.width, this.bound.height));

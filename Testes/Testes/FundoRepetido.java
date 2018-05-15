@@ -13,19 +13,26 @@ import javax.imageio.ImageIO;
 
 public class FundoRepetido extends JPanel {
 
+    public static final int HORIZONTAL = 0;
+    public static final int VERTICAL = 1;
+
     BufferedImage b;
     Rectangle2D rect;
     Dimension tm;
 
-    public FundoRepetido(Rectangle bound) {
+    public FundoRepetido(String imagem, Rectangle bound, int orientacao) {
         try {
-            b = ImageIO.read(new File(LOCAL_IMAGENS + "Topo.png"));
+            b = ImageIO.read(new File(LOCAL_IMAGENS + imagem + ".png"));
         } catch (IOException ex) {
             Logger.getLogger(FundoRepetido.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.tm = new Dimension(bound.width, bound.height);
         setBounds(bound);
-        rect = new Rectangle(0, 0, 1, bound.height);
+        if (orientacao == 0) {
+            rect = new Rectangle(0, 0, 1, bound.height);
+        } else {
+            rect = new Rectangle(0, 0, bound.width, 1);
+        }
     }
 
     @Override
